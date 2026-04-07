@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO: Home Page -->
+  <title>Highmark Associates | Premium Real Estate Agency in Islamabad – E-11, D-12, F-10, F-11</title>
+  <meta name="description" content="Highmark Associates is Islamabad's most trusted real estate agency. Buy, sell, or rent luxury apartments, houses, and commercial plots in E-11, D-12, F-10, F-11, DHA, and Bahria Town Rawalpindi. CDA Approved properties with Margalla Views." />
+  <meta name="keywords" content="real estate agency Islamabad, buy property Islamabad, Sector E-11 houses for sale, flats for rent E-11 Islamabad, plots for sale E-11, luxury apartments Islamabad, commercial plots E-11 Markaz, Islamabad property portal" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Highmark Associates | Premium Real Estate in Islamabad" />
+  <meta property="og:description" content="Discover CDA-approved properties with Margalla Views in E-11, D-12, F-10 & beyond. Islamabad's premium real estate agency." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://highmarkassociates.pk/" />
+
+  <!-- Schema.org: Real Estate Agency -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Highmark Associates",
+    "url": "https://highmarkassociates.pk",
+    "telephone": "+92-317-8090809",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Aslam Business Square shop no L.G 01 E-11/2 Markaz",
+      "addressLocality": "Islamabad",
+      "addressRegion": "Islamabad Capital Territory",
+      "addressCountry": "PK"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 33.7215,
+      "longitude": 72.9888
+    },
+    "areaServed": ["E-11 Islamabad", "D-12 Islamabad", "F-10 Islamabad", "F-11 Islamabad", "DHA Islamabad", "Bahria Town Rawalpindi"]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+<!-- ===== MOBILE NAV ===== -->
+<nav class="mobile-nav" id="mobileNav">
+    <span class="mobile-close">✕</span>
+    <a href="#hero">Home</a>
+    <a href="#listings">Property Listings</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+    <nav class="navbar" id="navbar">
+        <div class="container flex-between">
+            <a href="#hero" class="line-logo" aria-label="Highmark Associates Home">
+                <img src="./assets/logo.png" alt="Highmark Associates Logo" style="height: 60px; width: auto;" />
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#listings">Listings</a></li>
+                <li><a href="#about">Why Highmark</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="https://wa.me/923178090809" target="_blank" class="nav-cta conf-whatsapp-link">WhatsApp Consultation</a>
+            <button class="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="container animate-on-scroll">
+        <span class="overline">E-11 Islamabad · CDA Approved</span>
+        <h1>Find Your <em>Perfect Home</em><br>In Islamabad</h1>
+        <p class="hero-sub">Discover luxury apartments, spacious houses, and prime commercial plots in E-11, D-12, F-10, and F-11 — with Margalla Views and CDA approval.</p>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-field">
+                <label class="search-label" for="stype">Property Type</label>
+                <select id="stype">
+                    <option value="">All Types</option>
+                    <option>House</option>
+                    <option>Apartment</option>
+                    <option>Plot</option>
+                </select>
+            </div>
+            <div class="search-field">
+                <label class="search-label" for="ssector">Sector</label>
+                <select id="ssector">
+                    <option value="">All Sectors</option>
+                    <option>E-11 Islamabad</option>
+                    <option>D-12 Islamabad</option>
+                    <option>DHA Phase 2</option>
+                </select>
+            </div>
+            <button class="search-btn">🔍 Search</button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== LISTINGS ===== -->
+<section class="section listing-section" id="listings">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <span class="overline">Featured Properties</span>
+            <div class="gold-line"></div>
+            <h2>Premium Listings in<br>E-11 & Islamabad</h2>
+            <p>Handpicked CDA-approved properties with verified documents and prime locations.</p>
+        </div>
+
+        <div class="filter-tabs animate-on-scroll">
+            <button class="filter-tab active" data-filter="all">All Properties</button>
+            <button class="filter-tab" data-filter="sale">For Sale</button>
+            <button class="filter-tab" data-filter="rent">For Rent</button>
+            <button class="filter-tab" data-filter="commercial">Commercial</button>
+            <button class="filter-tab" data-filter="plot">Plots</button>
+        </div>
+
+        <div id="propertyGrid" class="grid-listing animate-on-scroll">
+            <!-- Properties rendered via main.js -->
+        </div>
+    </div>
+</section>
+
+<!-- ===== UNIT CONVERTER ===== -->
+<section class="section" style="background:var(--bg-dark);">
+    <div class="container">
+        <div class="converter-card animate-on-scroll">
+            <div class="converter-grid">
+                <div>
+                    <span class="overline">Useful Tool</span>
+                    <h3>Area Converter</h3>
+                    <p style="margin: 1.5rem 0; color: var(--text-dim); font-weight: 300;">Specially for overseas Pakistanis to understand local land measurements (Marla to Sq.ft).</p>
+                    
+                    <div class="converter-input-wrap">
+                        <div class="conv-input-group">
+                            <label>Marla Value</label>
+                            <input type="number" id="marlaInput" placeholder="e.g. 10" />
+                        </div>
+                        <button id="convertBtn" class="btn-conv">Convert →</button>
+                    </div>
+                </div>
+                <div>
+                    <div id="converterResult" class="converter-result">
+                        <span class="overline">Equivalent Area</span>
+                        <div id="resultValue" class="result-value">—</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section" style="background:var(--bg-darker);">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <span class="overline">Client Stories</span>
+            <div class="gold-line"></div>
+            <h2>What Our Clients Say</h2>
+        </div>
+        
+        <div class="testimonial-grid animate-on-scroll">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Highmark helped us buy a 1 Kanal house in E-11/4 with complete peace of mind. Their property verification service saved us from a major headache."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar" style="background: var(--gold-pale); border-radius: 50%; color: var(--bg-dark); font-weight: bold; width: 50px; height: 500x; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">TM</div>
+                    <div class="author-info">
+                        <h4>Tariq Mahmood</h4>
+                        <p>1 Kanal House · E-11/4</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"As an overseas Pakistani, I was hesitant about remote buying. Highmark handled everything via POA, and I now have a beautiful flat in Capital Residencia."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar" style="background: var(--gold-pale); border-radius: 50%; color: var(--bg-dark); font-weight: bold; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">AK</div>
+                    <div class="author-info">
+                        <h4>Asma Khattak</h4>
+                        <p>Capital Residencia Buyer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"I invested in a commercial plot in E-11 Markaz on Highmark's advice. The value has increased by 40% in just two years. Highly expert team!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar" style="background: var(--gold-pale); border-radius: 50%; color: var(--bg-dark); font-weight: bold; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">BR</div>
+                    <div class="author-info">
+                        <h4>Bilal Raza</h4>
+                        <p>Investor · E-11 Markaz</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="section" id="contact" style="background:var(--bg-dark);">
+    <div class="container">
+        <div class="grid-listing" style="grid-template-columns: 1fr 1.50fr; gap: 6rem; align-items: start;">
+            <div class="animate-on-scroll">
+                <span class="overline">Get In Touch</span>
+                <h2 style="font-size: 3rem; margin-bottom: 2rem;">Let's Find Your<br>Dream Property</h2>
+                <p style="color:var(--text-dim); margin-bottom: 3rem; font-weight: 300;">Our property consultants are available 7 days a week to handle your enquiries and provide expert advice.</p>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h4 style="font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;">Office Address</h4>
+                        <p class="conf-address">Aslam Business Square shop no L.G 01 E-11/2 Markaz Islamabad</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <h4 style="font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;">WhatsApp / Phone</h4>
+                        <a href="tel:+923178090809" class="conf-phone">+92-317-8090809</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="animate-on-scroll">
+                <form id="contactForm" style="display: grid; gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <input type="text" placeholder="Full Name" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;" />
+                        <input type="tel" placeholder="Phone Number" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;" />
+                    </div>
+                    <select style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;">
+                        <option>Buying Property</option>
+                        <option>Renting Property</option>
+                        <option>Property Management</option>
+                        <option>Investment Advice</option>
+                    </select>
+                    <textarea rows="5" placeholder="Your Message" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;"></textarea>
+                    <button type="submit" class="btn-conv" style="width: 100%;">Send Enquiry →</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-links">
+                <a href="#hero" class="logo">
+                    <span class="logo-main">HIGHMARK</span>
+                    <span class="logo-sub">ASSOCIATES</span>
+                </a>
+                <p class="footer-about">Islamabad's most trusted real estate agency specializing in CDA-approved properties with over 15 years of excellence.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#listings">Properties</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Sectors</h4>
+                <ul>
+                    <li><a>E-11 Islamabad</a></li>
+                    <li><a>D-12 Islamabad</a></li>
+                    <li><a>DHA Phase 2</a></li>
+                    <li><a>F-10 / F-11</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                 <h4>Contact</h4>
+                 <div class="contact-item">
+                     <span class="contact-icon">📍</span>
+                     <span class="conf-address">E-11/2 Markaz, Islamabad</span>
+                 </div>
+                 <div class="contact-item">
+                     <span class="contact-icon">📞</span>
+                     <span class="conf-phone">+92-317-8090809</span>
+                 </div>
+            </div>
+        </div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 3rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            © 2026 Highmark Associates. All rights reserved. | Premium Real Estate Islamabad
+        </div>
+    </div>
+</footer>
+
+<!-- ===== WHATSAPP FLOAT ===== -->
+<div class="whatsapp-float">
+    <div class="wa-label">Chat with an Expert</div>
+    <a href="https://wa.me/923178090809" target="_blank" class="wa-btn conf-whatsapp-link" aria-label="Chat on WhatsApp">💬</a>
+</div>
+
+<!-- Scripts -->
+<script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
