@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Highmark Associates</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+<!-- Login Overly -->
+<div id="loginOverlay" class="login-overlay">
+    <div class="login-card">
+        <div class="logo" style="margin-bottom: 2rem;">
+            <span class="logo-main" style="color:white;">HIGHMARK</span>
+            <span class="logo-sub" style="color:var(--gold);">ADMIN ACCESS</span>
+        </div>
+        <form id="loginForm">
+            <input type="password" id="adminPass" placeholder="Enter Admin Password" required />
+            <button type="submit" class="btn-conv" style="width: 100%;">Unlock Dashboard</button>
+        </form>
+    </div>
+</div>
+
+<div class="admin-wrapper" id="adminWrapper" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="logo" style="padding: 2rem;">
+            <span class="logo-main" style="color:white; font-size: 1.2rem;">HIGHMARK</span>
+            <span class="logo-sub">OFFICE</span>
+        </div>
+        <nav class="admin-nav">
+            <button class="admin-nav-item active" data-tab="listingsTab">🏠 Manage Listings</button>
+            <button class="admin-nav-item" data-tab="configTab">📱 Manage Credentials</button>
+            <button class="admin-nav-item" data-tab="exportTab">💾 Export Code</button>
+            <button class="admin-nav-item" id="logoutBtn" style="margin-top: auto; color: #ff4757;">🚪 Logout</button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <header class="admin-header">
+            <h2 id="tabTitle">Manage Property Listings</h2>
+            <div class="header-actions">
+                <button class="btn-conv" id="addListingBtn">+ Add New Listing</button>
+            </div>
+        </header>
+
+        <!-- Tab: Listings -->
+        <section id="listingsTab" class="admin-tab-content active">
+            <div class="table-container">
+                <table id="listingsTable">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Property Title</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listingsBody">
+                        <!-- Populated via admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tab: Config -->
+        <section id="configTab" class="admin-tab-content">
+            <div class="config-grid">
+                <div class="config-card">
+                    <h3>Contact Information</h3>
+                    <form id="configForm">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" name="phone" required />
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Number</label>
+                            <input type="text" name="whatsapp" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Office Address</label>
+                            <textarea name="address" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-conv">Save Credentials</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Export -->
+        <section id="exportTab" class="admin-tab-content">
+            <div class="export-card">
+                <span class="overline">Prepare for Deployment</span>
+                <h3>Generate Code Files</h3>
+                <p>After editing your website, click the buttons below to generate and download the updated code. Simply replace the old files in your hosting to make the changes live for everyone.</p>
+                <div class="export-actions">
+                    <button class="btn-conv" id="exportListings">Download listings.js</button>
+                    <button class="btn-conv" id="exportConfig">Download config.js</button>
+                </div>
+                <div class="export-preview">
+                    <label>Preview Updated Code</label>
+                    <textarea id="codePreview" readonly placeholder="Select a file to preview..."></textarea>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal: Add Listing -->
+<div id="listingModal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Add Property Listing</h2>
+        <form id="listingForm">
+            <input type="hidden" id="editId" />
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Property Title</label>
+                    <input type="text" id="ltitle" required placeholder="Brand New 1 Kanal House" />
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="lcat">
+                        <option value="sale">For Sale</option>
+                        <option value="rent">For Rent</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="plot">Plot</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text" id="lprice" required placeholder="PKR 8.5 Crore" />
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="lloc" required placeholder="E-11/4, Islamabad" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="url" id="limg" required placeholder="https://images.unsplash.com/..." />
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Area</label><input type="text" id="larea" placeholder="1 Kanal" /></div>
+                <div class="form-group"><label>Beds</label><input type="text" id="lbeds" placeholder="5" /></div>
+                <div class="form-group"><label>Baths</label><input type="text" id="lbaths" placeholder="6" /></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-outline" id="closeModal">Cancel</button>
+                <button type="submit" class="btn-conv">Save Property</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
