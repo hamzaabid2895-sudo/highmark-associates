@@ -136,6 +136,14 @@ const initNavbar = () => {
 
     hamburger.addEventListener('click', toggleNav);
     closeBtn.addEventListener('click', toggleNav);
+
+    // Close on link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+    });
 };
 
 // --- Unit Converter ---
