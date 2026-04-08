@@ -81,6 +81,13 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
   padding: 1rem 0;
   border-bottom: 1px solid rgba(184, 150, 62, 0.15);
 }
+
+/* Brand Logo Background Removal Fix */
+.line-logo img {
+  mix-blend-mode: multiply;
+  filter: contrast(110%) brightness(110%);
+}
+
 .logo { display: flex; flex-direction: column; }
 .logo-main {
   font-family: 'Playfair Display', serif;
