@@ -86,9 +86,6 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
 /* Brand Logo Background Removal Fix */
 .logo-img {
   display: block;
-  mix-blend-mode: multiply;
-  filter: contrast(120%) brightness(110%);
-  background-color: transparent !important;
 }
 
 .logo { display: flex; flex-direction: column; }
