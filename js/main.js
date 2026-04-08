@@ -1,8 +1,10 @@
 import { listings as defaultListings } from './listings.js';
 import { config as defaultConfig } from './config.js';
+import { blogs as defaultBlogs } from './blogs.js';
 
 let listings = JSON.parse(localStorage.getItem('hm_listings')) || defaultListings;
 let config = JSON.parse(localStorage.getItem('hm_config')) || defaultConfig;
+let blogs = JSON.parse(localStorage.getItem('hm_blogs')) || defaultBlogs;
 
 document.addEventListener('DOMContentLoaded', () => {
     initBrandInfo();
@@ -12,7 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initUnitConverter();
     initForm();
     initAnimations();
+    initPropertyModal();
+    renderBlogs();
 });
+
+// --- Blogs Rendering ---
+const renderBlogs = () => {
+    const grid = document.getElementById('blogsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    blogs.forEach(b => {
+        grid.innerHTML += `
+            <article class="blog-card">
+                <img src="${b.image}" alt="${b.title}" class="blog-img" loading="lazy" />
+                <div class="blog-content">
+                    <span class="blog-date">${b.date}</span>
+                    <h3 class="blog-title">${b.title}</h3>
+                    <p class="blog-desc">${b.content}</p>
+                </div>
+            </article>
+        `;
+    });
+};
 
 // --- Brand & Contact Info ---
 const initBrandInfo = () => {
@@ -81,6 +104,13 @@ const renderProperties = (category = 'all') => {
                 </div>
             </div>
         `;
+        
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+            if (e.target.classList.contains('card-save')) return;
+            window.openPropertyModal(p);
+        });
+
         grid.appendChild(card);
     });
 };
@@ -100,6 +130,63 @@ const getSpecIcon = (key) => {
 
 const initPropertyGrid = () => {
     renderProperties('all');
+};
+
+const initPropertyModal = () => {
+    const modal = document.getElementById('propertyModal');
+    const closeBtn = document.getElementById('closePropertyModal');
+    
+    if (!modal || !closeBtn) return;
+    
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    });
+    
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
+
+    window.openPropertyModal = (p) => {
+        document.getElementById('pmodalMainImg').src = p.image;
+        
+        const galleryEl = document.getElementById('pmodalGallery');
+        galleryEl.innerHTML = '';
+        const fullGallery = [p.image].concat(Array.isArray(p.gallery) ? p.gallery : []);
+        
+        // Hide gallery tray if only 1 image
+        galleryEl.style.display = fullGallery.length > 1 ? 'flex' : 'none';
+        
+        fullGallery.forEach(imgSrc => {
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.onclick = () => document.getElementById('pmodalMainImg').src = imgSrc;
+            galleryEl.appendChild(img);
+        });
+
+        document.getElementById('pmodalTitle').textContent = p.title;
+        document.getElementById('pmodalLocation').textContent = p.location;
+        document.getElementById('pmodalPrice').textContent = p.price + (p.priceNote ? ` ${p.priceNote}` : '');
+        document.getElementById('pmodalArea').textContent = p.specs.area || '-';
+        document.getElementById('pmodalBeds').textContent = p.specs.beds || '-';
+        document.getElementById('pmodalBaths').textContent = p.specs.baths || '-';
+        document.getElementById('pmodalDesc').textContent = p.description || 'No additional description provided for this property.';
+        
+        const typeBadge = document.getElementById('pmodalType');
+        typeBadge.className = `badge ${p.category === 'sale' ? 'badge-sale' : 'badge-rent'}`;
+        typeBadge.textContent = p.category === 'sale' ? 'For Sale' : 'For Rent';
+
+        const waBase = config.social && config.social.whatsappLink ? config.social.whatsappLink : `https://wa.me/${config.contact.whatsapp.replace(/[^0-9]/g, '')}`;
+        const waText = encodeURIComponent(`Hi Highmark Associates, I am interested in your property: *${p.title}* (${p.price}). Please send me more details. Location: ${p.location}`);
+        document.getElementById('pmodalWhatsApp').href = `${waBase}?text=${waText}`;
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
 };
 
 // --- Filters ---

@@ -1,8 +1,10 @@
 import { listings as defaultListings } from './listings.js';
 import { config as defaultConfig } from './config.js';
+import { blogs as defaultBlogs } from './blogs.js';
 
 let listings = JSON.parse(localStorage.getItem('hm_listings')) || defaultListings;
 let config = JSON.parse(localStorage.getItem('hm_config')) || defaultConfig;
+let blogs = JSON.parse(localStorage.getItem('hm_blogs')) || defaultBlogs;
 
 const ADMIN_PASS = "admin123";
 
@@ -10,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAuth();
     initTabs();
     renderAdminListings();
+    renderAdminBlogs();
     initForms();
     initExport();
 });
@@ -58,7 +61,7 @@ const initTabs = () => {
             
             item.classList.add('active');
             document.getElementById(item.dataset.tab).classList.add('active');
-            tabTitle.textContent = item.textContent.replace('🏠 ', '').replace('📱 ', '').replace('💾 ', '');
+            tabTitle.textContent = item.textContent.replace('🏠 ', '').replace('📱 ', '').replace('💾 ', '').replace('📰 ', '');
         });
     });
 };
@@ -108,6 +111,14 @@ window.editListing = (id) => {
     document.getElementById('larea').value = p.specs.area || "";
     document.getElementById('lbeds').value = p.specs.beds || "";
     document.getElementById('lbaths').value = p.specs.baths || "";
+    document.getElementById('ldesc').value = p.description || "";
+    
+    // Gallery
+    document.getElementById('lgalleryFile').value = '';
+    const hiddenGalleryInput = document.getElementById('lgallery');
+    const galleryPreview = document.getElementById('galleryPreview');
+    hiddenGalleryInput.value = p.gallery ? JSON.stringify(p.gallery) : "[]";
+    renderGalleryPreview();
 
     document.getElementById('modalTitle').textContent = "Edit Property Details";
     document.getElementById('listingModal').classList.add('open');
@@ -141,6 +152,54 @@ const initForms = () => {
         }
     });
 
+    // Gallery Upload Handling
+    const galleryFileInput = document.getElementById('lgalleryFile');
+    const hiddenGalleryInput = document.getElementById('lgallery');
+    
+    window.renderGalleryPreview = () => {
+        const galleryPreview = document.getElementById('galleryPreview');
+        galleryPreview.innerHTML = '';
+        try {
+            const arr = JSON.parse(hiddenGalleryInput.value || "[]");
+            arr.forEach((imgSrc, index) => {
+                const wrap = document.createElement('div');
+                wrap.style.position = 'relative';
+                wrap.innerHTML = `
+                    <img src="${imgSrc}" style="width:60px; height:60px; object-fit:cover; border-radius:4px; border:1px solid rgba(255,255,255,0.1);" />
+                    <button type="button" onclick="removeGalleryImage(${index})" style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; width:20px; height:20px; font-size:10px; display:flex; align-items:center; justify-content:center;">✕</button>
+                `;
+                galleryPreview.appendChild(wrap);
+            });
+        } catch(e) {}
+    };
+
+    window.removeGalleryImage = (index) => {
+        try {
+            const arr = JSON.parse(hiddenGalleryInput.value || "[]");
+            arr.splice(index, 1);
+            hiddenGalleryInput.value = JSON.stringify(arr);
+            renderGalleryPreview();
+        } catch(e) {}
+    };
+
+    galleryFileInput.addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+            try {
+                let currentGallery = JSON.parse(hiddenGalleryInput.value || "[]");
+                for (const file of files) {
+                    const compressedDataUrl = await compressImage(file);
+                    currentGallery.push(compressedDataUrl);
+                }
+                hiddenGalleryInput.value = JSON.stringify(currentGallery);
+                renderGalleryPreview();
+            } catch (error) {
+                console.error("Gallery processing error:", error);
+                alert("Failed to process some gallery images.");
+            }
+        }
+    });
+
     // Show Modal
     document.getElementById('addListingBtn').addEventListener('click', () => {
         document.getElementById('listingForm').reset();
@@ -149,6 +208,8 @@ const initForms = () => {
         imgPreview.style.display = 'none';
         imgPreview.src = "";
         hiddenImgInput.value = "";
+        hiddenGalleryInput.value = "[]";
+        renderGalleryPreview();
         
         document.getElementById('modalTitle').textContent = "Add Property Listing";
         document.getElementById('listingModal').classList.add('open');
@@ -163,6 +224,9 @@ const initForms = () => {
     document.getElementById('listingForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const editId = document.getElementById('editId').value;
+        let galleryArr = [];
+        try { galleryArr = JSON.parse(document.getElementById('lgallery').value || "[]"); } catch(e) {}
+
         const newListing = {
             id: editId ? parseInt(editId) : Date.now(),
             category: document.getElementById('lcat').value,
@@ -172,6 +236,8 @@ const initForms = () => {
             price: document.getElementById('lprice').value,
             priceNote: "",
             image: document.getElementById('limg').value,
+            description: document.getElementById('ldesc').value,
+            gallery: galleryArr,
             specs: {
                 area: document.getElementById('larea').value,
                 beds: document.getElementById('lbeds').value,
@@ -208,6 +274,109 @@ const initForms = () => {
         localStorage.setItem('hm_config', JSON.stringify(config));
         alert('Credentials Updated Successfully!');
     });
+
+    // --- Blogs Management ---
+    window.renderAdminBlogs = () => {
+        const body = document.getElementById('blogsBody');
+        if(!body) return;
+        body.innerHTML = '';
+
+        blogs.forEach(b => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><img src="${b.image}" class="img-preview" /></td>
+                <td><strong>${b.title}</strong><br><small>${b.date}</small></td>
+                <td>
+                    <button class="btn-action btn-edit" onclick="window.editBlog('${b.id}')">Edit</button>
+                    <button class="btn-action btn-delete" onclick="window.deleteBlog('${b.id}')">Delete</button>
+                </td>
+            `;
+            body.appendChild(tr);
+        });
+    };
+
+    window.editBlog = (id) => {
+        const b = blogs.find(item => item.id == id);
+        if (!b) return;
+
+        document.getElementById('bEditId').value = b.id;
+        document.getElementById('btitle').value = b.title;
+        document.getElementById('bcontent').value = b.content;
+        document.getElementById('bimg').value = b.image || "";
+        
+        const preview = document.getElementById('bimgPreview');
+        if (b.image) {
+            preview.src = b.image;
+            preview.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+        }
+
+        document.getElementById('bModalTitle').textContent = "Edit Blog";
+        document.getElementById('blogModal').classList.add('open');
+    };
+
+    window.deleteBlog = (id) => {
+        if (confirm('Delete this blog post?')) {
+            blogs = blogs.filter(item => item.id != id);
+            saveBlogsAndRefresh();
+        }
+    };
+
+    document.getElementById('addBlogBtn')?.addEventListener('click', () => {
+        document.getElementById('blogForm').reset();
+        document.getElementById('bEditId').value = "";
+        document.getElementById('bimgPreview').style.display = 'none';
+        document.getElementById('bimgPreview').src = "";
+        document.getElementById('bimg').value = "";
+        document.getElementById('bModalTitle').textContent = "Add New Blog";
+        document.getElementById('blogModal').classList.add('open');
+    });
+
+    document.getElementById('closeBlogModal')?.addEventListener('click', () => {
+        document.getElementById('blogModal').classList.remove('open');
+    });
+
+    const bImgFileInput = document.getElementById('bimgFile');
+    bImgFileInput?.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            try {
+                const compressedDataUrl = await compressImage(file);
+                document.getElementById('bimg').value = compressedDataUrl;
+                document.getElementById('bimgPreview').src = compressedDataUrl;
+                document.getElementById('bimgPreview').style.display = 'block';
+            } catch (error) {
+                alert("Failed to process image.");
+            }
+        }
+    });
+
+    document.getElementById('blogForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('bEditId').value;
+        const newBlog = {
+            id: editId ? editId : Date.now().toString(),
+            title: document.getElementById('btitle').value,
+            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            image: document.getElementById('bimg').value,
+            content: document.getElementById('bcontent').value
+        };
+
+        if (editId) {
+            blogs = blogs.map(item => item.id == editId ? newBlog : item);
+        } else {
+            blogs.unshift(newBlog); // Add new blogs to the top
+        }
+
+        saveBlogsAndRefresh();
+        document.getElementById('blogModal').classList.remove('open');
+    });
+};
+
+const saveBlogsAndRefresh = () => {
+    localStorage.setItem('hm_blogs', JSON.stringify(blogs));
+    window.renderAdminBlogs();
 };
 
 const saveAndRefresh = () => {
@@ -229,6 +398,12 @@ const initExport = () => {
         const content = `export const config = ${JSON.stringify(config, null, 2)};`;
         preview.value = content;
         downloadFile('config.js', content);
+    });
+
+    document.getElementById('exportBlogs')?.addEventListener('click', () => {
+        const content = `export const blogs = ${JSON.stringify(blogs, null, 2)};`;
+        preview.value = content;
+        downloadFile('blogs.js', content);
     });
 };
 

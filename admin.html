@@ -38,6 +38,7 @@
         <nav class="admin-nav">
             <button class="admin-nav-item active" data-tab="listingsTab">🏠 Manage Listings</button>
             <button class="admin-nav-item" data-tab="configTab">📱 Manage Credentials</button>
+            <button class="admin-nav-item" data-tab="blogsTab">📰 Manage Blogs</button>
             <button class="admin-nav-item" data-tab="exportTab">💾 Export Code</button>
             <button class="admin-nav-item" id="logoutBtn" style="margin-top: auto; color: #ff4757;">🚪 Logout</button>
         </nav>
@@ -67,6 +68,28 @@
                         </tr>
                     </thead>
                     <tbody id="listingsBody">
+                        <!-- Populated via admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tab: Blogs -->
+        <section id="blogsTab" class="admin-tab-content">
+            <header class="admin-header" style="margin-bottom:2rem; padding-bottom:1rem; border-bottom:none;">
+                <h3 style="color:var(--text-white);">Manage Articles</h3>
+                <button class="btn-conv" id="addBlogBtn">+ Add New Blog</button>
+            </header>
+            <div class="table-container">
+                <table id="blogsTable">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Title & Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="blogsBody">
                         <!-- Populated via admin.js -->
                     </tbody>
                 </table>
@@ -110,6 +133,7 @@
                 <div class="export-actions">
                     <button class="btn-conv" id="exportListings">Download listings.js</button>
                     <button class="btn-conv" id="exportConfig">Download config.js</button>
+                    <button class="btn-conv" id="exportBlogs">Download blogs.js</button>
                 </div>
                 <div class="export-preview">
                     <label>Preview Updated Code</label>
@@ -167,9 +191,51 @@
                 <div class="form-group"><label>Beds</label><input type="text" id="lbeds" placeholder="5" /></div>
                 <div class="form-group"><label>Baths</label><input type="text" id="lbaths" placeholder="6" /></div>
             </div>
+            <div class="form-group">
+                <label>Property Description</label>
+                <textarea id="ldesc" rows="4" placeholder="Detailed property description..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none; width: 100%;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Gallery (Additional Images)</label>
+                <input type="file" id="lgalleryFile" accept="image/*" multiple style="padding: 1rem 0; border: none; background: transparent; cursor: pointer; color: white; width: 100%;" />
+                <div id="galleryPreview" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;"></div>
+                <input type="hidden" id="lgallery" />
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn-outline" id="closeModal">Cancel</button>
                 <button type="submit" class="btn-conv">Save Property</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Add Blog -->
+<div id="blogModal" class="modal">
+    <div class="modal-content">
+        <h2 id="bModalTitle">Add New Blog</h2>
+        <form id="blogForm">
+            <input type="hidden" id="bEditId" />
+            <div class="form-group">
+                <label>Blog Title</label>
+                <input type="text" id="btitle" required placeholder="Top 5 Investment Areas..." />
+            </div>
+            <div class="form-group">
+                <label>Cover Image (Base64)</label>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                    <img id="bimgPreview" src="" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; display: none; background: rgba(255,255,255,0.05);" />
+                    <div>
+                        <input type="file" id="bimgFile" accept="image/*" style="padding: 0; border: none; background: transparent; cursor: pointer;" />
+                    </div>
+                </div>
+                <input type="hidden" id="bimg" required />
+            </div>
+            <div class="form-group">
+                <label>Article Content</label>
+                <textarea id="bcontent" rows="6" required placeholder="Write your blog post here..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none; width: 100%;"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-outline" id="closeBlogModal">Cancel</button>
+                <button type="submit" class="btn-conv">Save Blog</button>
             </div>
         </form>
     </div>
