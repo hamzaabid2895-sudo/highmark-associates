@@ -9,7 +9,7 @@ export const config = {
   brand: {
     name: "Highmark Associates",
     tagline: "Premium Real Estate · Islamabad",
-    logoPath: "assets/Highmark.png"
+    logoPath: "assets/highmark.png"
   },
   contact: {
     phone: "+92-317-8090809",
