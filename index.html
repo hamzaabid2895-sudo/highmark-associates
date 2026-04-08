@@ -215,7 +215,7 @@
 <!-- ===== CONTACT ===== -->
 <section class="section" id="contact" style="background:var(--bg-dark);">
     <div class="container">
-        <div class="grid-listing" style="grid-template-columns: 1fr 1.50fr; gap: 6rem; align-items: start;">
+        <div class="contact-grid-layout">
             <div class="animate-on-scroll">
                 <span class="overline">Get In Touch</span>
                 <h2 style="font-size: 3rem; margin-bottom: 2rem;">Let's Find Your<br>Dream Property</h2>
@@ -238,18 +238,18 @@
             </div>
 
             <div class="animate-on-scroll">
-                <form id="contactForm" style="display: grid; gap: 1.5rem;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <input type="text" placeholder="Full Name" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;" />
-                        <input type="tel" placeholder="Phone Number" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;" />
+                <form id="contactForm" class="contact-form-layout">
+                    <div class="contact-form-row">
+                        <input type="text" placeholder="Full Name" required class="contact-form-input" />
+                        <input type="tel" placeholder="Phone Number" required class="contact-form-input" />
                     </div>
-                    <select style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;">
+                    <select class="contact-form-input">
                         <option>Buying Property</option>
                         <option>Renting Property</option>
                         <option>Property Management</option>
                         <option>Investment Advice</option>
                     </select>
-                    <textarea rows="5" placeholder="Your Message" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem; color: white; border-radius: 2px; outline: none;"></textarea>
+                    <textarea rows="5" placeholder="Your Message" class="contact-form-input"></textarea>
                     <button type="submit" class="btn-conv" style="width: 100%;">Send Enquiry →</button>
                 </form>
             </div>

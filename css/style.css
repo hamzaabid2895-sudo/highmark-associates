@@ -294,6 +294,21 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
 .author-info h4 { font-size: 1rem; margin-bottom: 0.25rem; font-family: 'Jost', sans-serif; font-weight: 600; }
 .author-info p { font-size: 0.75rem; color: var(--gold); }
 
+/* ===== CONTACT SECTION ===== */
+.contact-grid-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 6rem; align-items: start; }
+.contact-form-layout { display: grid; gap: 1.5rem; }
+.contact-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.contact-form-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 1.2rem;
+  color: white;
+  border-radius: 2px;
+  outline: none;
+  width: 100%;
+}
+.contact-form-input:focus { border-color: var(--gold); }
+
 /* ===== FOOTER ===== */
 footer { background: var(--bg-darker); padding: 8rem 0 4rem; border-top: 1px solid rgba(255,255,255,0.05); }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 4rem; margin-bottom: 6rem; }
@@ -378,6 +393,8 @@ footer { background: var(--bg-darker); padding: 8rem 0 4rem; border-top: 1px sol
   .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
   .navbar { padding: 1rem 0; }
   .logo-main { font-size: 1.3rem; }
+  .contact-grid-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-form-row { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
