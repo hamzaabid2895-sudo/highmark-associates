@@ -152,8 +152,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Image URL</label>
-                <input type="url" id="limg" required placeholder="https://images.unsplash.com/..." />
+                <label>Property Image</label>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                    <img id="imgPreview" src="" alt="Listing Image Preview" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; display: none; background: rgba(255,255,255,0.05);" />
+                    <div>
+                        <input type="file" id="limgFile" accept="image/*" style="padding: 0; border: none; background: transparent; cursor: pointer;" />
+                        <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 0.5rem;">Upload an image from your device.</p>
+                    </div>
+                </div>
+                <input type="hidden" id="limg" required />
             </div>
             <div class="form-row">
                 <div class="form-group"><label>Area</label><input type="text" id="larea" placeholder="1 Kanal" /></div>

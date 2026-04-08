@@ -94,7 +94,17 @@ window.editListing = (id) => {
     document.getElementById('lcat').value = p.category;
     document.getElementById('lprice').value = p.price;
     document.getElementById('lloc').value = p.location;
-    document.getElementById('limg').value = p.image;
+    document.getElementById('limg').value = p.image || "";
+    const imgPreview = document.getElementById('imgPreview');
+    if (p.image) {
+        imgPreview.src = p.image;
+        imgPreview.style.display = 'block';
+    } else {
+        imgPreview.style.display = 'none';
+        imgPreview.src = '';
+    }
+    document.getElementById('limgFile').value = '';
+
     document.getElementById('larea').value = p.specs.area || "";
     document.getElementById('lbeds').value = p.specs.beds || "";
     document.getElementById('lbaths').value = p.specs.baths || "";
@@ -111,10 +121,35 @@ window.deleteListing = (id) => {
 };
 
 const initForms = () => {
+    // Image Upload Handling
+    const imgFileInput = document.getElementById('limgFile');
+    const imgPreview = document.getElementById('imgPreview');
+    const hiddenImgInput = document.getElementById('limg');
+
+    imgFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            try {
+                const compressedDataUrl = await compressImage(file);
+                hiddenImgInput.value = compressedDataUrl;
+                imgPreview.src = compressedDataUrl;
+                imgPreview.style.display = 'block';
+            } catch (error) {
+                console.error("Image processing error:", error);
+                alert("Failed to process image. Please try again with a smaller file.");
+            }
+        }
+    });
+
     // Show Modal
     document.getElementById('addListingBtn').addEventListener('click', () => {
         document.getElementById('listingForm').reset();
         document.getElementById('editId').value = "";
+        
+        imgPreview.style.display = 'none';
+        imgPreview.src = "";
+        hiddenImgInput.value = "";
+        
         document.getElementById('modalTitle').textContent = "Add Property Listing";
         document.getElementById('listingModal').classList.add('open');
     });
@@ -205,4 +240,39 @@ const downloadFile = (filename, text) => {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+};
+
+// --- Image Compression Utility ---
+const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = event => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 800; // Optimal width for cards
+                const scaleSize = MAX_WIDTH / img.width;
+                
+                // Only scale if image is larger than MAX_WIDTH
+                if (scaleSize < 1) {
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                } else {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                }
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Compress to 70% quality JPEG
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                resolve(dataUrl);
+            }
+            img.onerror = error => reject(error);
+        };
+        reader.onerror = error => reject(error);
+    });
 };

@@ -283,8 +283,14 @@ tr:last-child td {
 }
 
 @media (max-width: 600px) {
+    .admin-wrapper { flex-direction: column; }
+    .admin-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .admin-nav { flex-direction: row; padding: 0.5rem; justify-content: space-around; overflow-x: auto; gap: 0; }
+    .admin-nav-item { padding: 1rem; }
     .table-container { overflow-x: auto; }
     table { min-width: 600px; }
     .admin-main { padding: 1rem; }
-    .modal-content { padding: 1.5rem; }
+    .modal { padding: 1rem; }
+    .modal-content { padding: 1.5rem; max-height: 90vh; overflow-y: auto; width: 100%; }
+    .export-actions { flex-direction: column; }
 }
