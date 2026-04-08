@@ -74,6 +74,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
   z-index: 1000;
   padding: 1.5rem 0;
   transition: var(--transition);
+  isolation: isolate; /* Create new stacking context for blend modes */
 }
 .navbar.scrolled {
   background: var(--header-glass);
@@ -83,9 +84,11 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
 }
 
 /* Brand Logo Background Removal Fix */
-.line-logo img {
+.logo-img {
+  display: block;
   mix-blend-mode: multiply;
-  filter: contrast(110%) brightness(110%);
+  filter: contrast(120%) brightness(110%);
+  background-color: transparent !important;
 }
 
 .logo { display: flex; flex-direction: column; }
