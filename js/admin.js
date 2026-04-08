@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initAuth();
     initTabs();
     renderAdminListings();
-    renderAdminBlogs();
     initForms();
     initExport();
+    renderAdminBlogs();
 });
 
 // --- Authentication ---
@@ -270,113 +270,62 @@ const initForms = () => {
         config.contact.whatsapp = cForm.whatsapp.value;
         config.contact.email = cForm.email.value;
         config.contact.address = cForm.address.value;
-        
         localStorage.setItem('hm_config', JSON.stringify(config));
         alert('Credentials Updated Successfully!');
     });
+};
 
-    // --- Blogs Management ---
-    window.renderAdminBlogs = () => {
-        const body = document.getElementById('blogsBody');
-        if(!body) return;
-        body.innerHTML = '';
+// --- Blogs CRUD (standalone, called after DOM is ready) ---
+const renderAdminBlogs = () => {
+    const body = document.getElementById('blogsBody');
+    if (!body) return;
+    body.innerHTML = '';
 
-        blogs.forEach(b => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><img src="${b.image}" class="img-preview" /></td>
-                <td><strong>${b.title}</strong><br><small>${b.date}</small></td>
-                <td>
-                    <button class="btn-action btn-edit" onclick="window.editBlog('${b.id}')">Edit</button>
-                    <button class="btn-action btn-delete" onclick="window.deleteBlog('${b.id}')">Delete</button>
-                </td>
-            `;
-            body.appendChild(tr);
-        });
-    };
-
-    window.editBlog = (id) => {
-        const b = blogs.find(item => item.id == id);
-        if (!b) return;
-
-        document.getElementById('bEditId').value = b.id;
-        document.getElementById('btitle').value = b.title;
-        document.getElementById('bcontent').value = b.content;
-        document.getElementById('bimg').value = b.image || "";
-        
-        const preview = document.getElementById('bimgPreview');
-        if (b.image) {
-            preview.src = b.image;
-            preview.style.display = 'block';
-        } else {
-            preview.style.display = 'none';
-        }
-
-        document.getElementById('bModalTitle').textContent = "Edit Blog";
-        document.getElementById('blogModal').classList.add('open');
-    };
-
-    window.deleteBlog = (id) => {
-        if (confirm('Delete this blog post?')) {
-            blogs = blogs.filter(item => item.id != id);
-            saveBlogsAndRefresh();
-        }
-    };
-
-    document.getElementById('addBlogBtn')?.addEventListener('click', () => {
-        document.getElementById('blogForm').reset();
-        document.getElementById('bEditId').value = "";
-        document.getElementById('bimgPreview').style.display = 'none';
-        document.getElementById('bimgPreview').src = "";
-        document.getElementById('bimg').value = "";
-        document.getElementById('bModalTitle').textContent = "Add New Blog";
-        document.getElementById('blogModal').classList.add('open');
-    });
-
-    document.getElementById('closeBlogModal')?.addEventListener('click', () => {
-        document.getElementById('blogModal').classList.remove('open');
-    });
-
-    const bImgFileInput = document.getElementById('bimgFile');
-    bImgFileInput?.addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            try {
-                const compressedDataUrl = await compressImage(file);
-                document.getElementById('bimg').value = compressedDataUrl;
-                document.getElementById('bimgPreview').src = compressedDataUrl;
-                document.getElementById('bimgPreview').style.display = 'block';
-            } catch (error) {
-                alert("Failed to process image.");
-            }
-        }
-    });
-
-    document.getElementById('blogForm')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const editId = document.getElementById('bEditId').value;
-        const newBlog = {
-            id: editId ? editId : Date.now().toString(),
-            title: document.getElementById('btitle').value,
-            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-            image: document.getElementById('bimg').value,
-            content: document.getElementById('bcontent').value
-        };
-
-        if (editId) {
-            blogs = blogs.map(item => item.id == editId ? newBlog : item);
-        } else {
-            blogs.unshift(newBlog); // Add new blogs to the top
-        }
-
-        saveBlogsAndRefresh();
-        document.getElementById('blogModal').classList.remove('open');
+    blogs.forEach(b => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><img src="${b.image}" class="img-preview" /></td>
+            <td><strong>${b.title}</strong><br><small>${b.date}</small></td>
+            <td>
+                <button class="btn-action btn-edit" onclick="window.editBlog('${b.id}')">Edit</button>
+                <button class="btn-action btn-delete" onclick="window.deleteBlog('${b.id}')">Delete</button>
+            </td>
+        `;
+        body.appendChild(tr);
     });
 };
 
 const saveBlogsAndRefresh = () => {
     localStorage.setItem('hm_blogs', JSON.stringify(blogs));
-    window.renderAdminBlogs();
+    renderAdminBlogs();
+};
+
+window.editBlog = (id) => {
+    const b = blogs.find(item => item.id == id);
+    if (!b) return;
+
+    document.getElementById('bEditId').value = b.id;
+    document.getElementById('btitle').value = b.title;
+    document.getElementById('bcontent').value = b.content;
+    document.getElementById('bimg').value = b.image || "";
+    
+    const preview = document.getElementById('bimgPreview');
+    if (b.image) {
+        preview.src = b.image;
+        preview.style.display = 'block';
+    } else {
+        preview.style.display = 'none';
+    }
+
+    document.getElementById('bModalTitle').textContent = "Edit Blog";
+    document.getElementById('blogModal').classList.add('open');
+};
+
+window.deleteBlog = (id) => {
+    if (confirm('Delete this blog post?')) {
+        blogs = blogs.filter(item => item.id != id);
+        saveBlogsAndRefresh();
+    }
 };
 
 const saveAndRefresh = () => {

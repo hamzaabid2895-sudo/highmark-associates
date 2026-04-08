@@ -106,9 +106,20 @@ const renderProperties = (category = 'all') => {
         `;
         
         card.style.cursor = 'pointer';
-        card.addEventListener('click', (e) => {
-            if (e.target.classList.contains('card-save')) return;
+        
+        const openModal = (e) => {
+            // Don't open if tapping the heart save button
+            if (e.target.classList.contains('card-save') || e.target.closest('.card-save')) return;
             window.openPropertyModal(p);
+        };
+
+        card.addEventListener('click', openModal);
+        // Explicit touchend for mobile safari / android browsers
+        let touchMoved = false;
+        card.addEventListener('touchstart', () => { touchMoved = false; }, { passive: true });
+        card.addEventListener('touchmove', () => { touchMoved = true; }, { passive: true });
+        card.addEventListener('touchend', (e) => {
+            if (!touchMoved) openModal(e);
         });
 
         grid.appendChild(card);
