@@ -155,8 +155,8 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
   text-align: center;
+  /* overflow: hidden removed to allow dropdowns to be visible */
 }
 .hero-bg {
   position: absolute;
@@ -194,6 +194,8 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
   gap: 0.5rem;
   max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  z-index: 10; /* Ensure dropdowns overlap next sections */
 }
 .search-field { flex: 1; display: flex; flex-direction: column; padding: 0.75rem 1.5rem; border-right: 1px solid rgba(255, 255, 255, 0.1); text-align: left; }
 .search-field:last-of-type { border-right: none; }
