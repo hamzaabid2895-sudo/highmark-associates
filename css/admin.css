@@ -6,6 +6,7 @@
   background: var(--bg-dark);
   color: var(--text-white);
   min-height: 100vh;
+  color-scheme: dark;
 }
 
 /* Sidebar */
@@ -78,15 +79,100 @@
 .form-group input, .form-group select, .form-group textarea {
   width: 100%;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-card) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--white);
   border-radius: var(--radius);
   outline: none;
 }
+select option {
+  background: var(--bg-card) !important;
+  color: var(--white) !important;
+}
 
 .form-group input:focus {
   border-color: var(--gold);
+}
+
+/* Custom Select Component UI (Shared with Main) */
+.custom-select-wrapper {
+  position: relative;
+  user-select: none;
+  width: 100%;
+  background: var(--bg-card) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--white);
+}
+
+.custom-select-trigger::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(45deg);
+  margin-left: 1rem;
+  transition: transform 0.3s;
+}
+
+.custom-select-wrapper.open .custom-select-trigger::after {
+  transform: rotate(-135deg) translateY(-2px) translateX(-2px);
+}
+
+.custom-options {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: #1A1C1E;
+  border: 1px solid rgba(184, 150, 62, 0.5);
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 5000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.2s;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.custom-select-wrapper.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.custom-option {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.custom-option:hover {
+  background: rgba(184, 150, 62, 0.15);
+  color: var(--gold);
+}
+
+.custom-option.selected {
+  background: var(--gold);
+}
+
+.native-select-hidden {
+  display: none !important;
 }
 
 /* Modals */

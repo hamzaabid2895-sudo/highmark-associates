@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initForms();
     initExport();
     renderAdminBlogs();
+    initCustomSelects();
 });
 
 // --- Authentication ---
@@ -398,5 +399,71 @@ const compressImage = (file) => {
             img.onerror = error => reject(error);
         };
         reader.onerror = error => reject(error);
+    });
+};
+const initCustomSelects = () => {
+    const selects = document.querySelectorAll('select');
+    
+    selects.forEach(select => {
+        if (select.classList.contains('native-select-hidden')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-select-wrapper';
+        
+        const trigger = document.createElement('div');
+        trigger.className = 'custom-select-trigger';
+        trigger.textContent = select.options[select.selectedIndex]?.textContent || 'Select';
+
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'custom-options';
+
+        Array.from(select.options).forEach((option, index) => {
+            const customOption = document.createElement('div');
+            customOption.className = 'custom-option';
+            customOption.textContent = option.textContent;
+            if (index === select.selectedIndex) customOption.classList.add('selected');
+
+            customOption.addEventListener('click', (e) => {
+                e.stopPropagation();
+                select.selectedIndex = index;
+                select.dispatchEvent(new Event('change'));
+                trigger.textContent = option.textContent;
+                
+                optionsContainer.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
+                customOption.classList.add('selected');
+                
+                wrapper.classList.remove('open');
+            });
+
+            optionsContainer.appendChild(customOption);
+        });
+
+        // Toggle dropdown on wrapper click for larger target
+        wrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = wrapper.classList.contains('open');
+            document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+            if (!isOpen) wrapper.classList.add('open');
+        });
+
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.appendChild(select);
+        wrapper.appendChild(trigger);
+        wrapper.appendChild(optionsContainer);
+        
+        select.classList.add('native-select-hidden');
+
+        // Sync custom UI if native select is changed programmatically
+        select.addEventListener('change', () => {
+            trigger.textContent = select.options[select.selectedIndex]?.textContent || 'Select';
+            optionsContainer.querySelectorAll('.custom-option').forEach((opt, idx) => {
+                if (idx === select.selectedIndex) opt.classList.add('selected');
+                else opt.classList.remove('selected');
+            });
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
     });
 };

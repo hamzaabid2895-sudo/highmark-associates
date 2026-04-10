@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initForm();
     initAnimations();
     initPropertyModal();
+    initSearch();
+    initCustomSelects();
     renderBlogs();
 });
 
@@ -46,7 +48,9 @@ const initBrandInfo = () => {
     });
 
     document.querySelectorAll('.conf-address').forEach(el => {
-        el.textContent = config.contact.address;
+        if (el.textContent.trim() !== config.contact.address.trim()) {
+            el.textContent = config.contact.address;
+        }
     });
 
     document.querySelectorAll('.conf-whatsapp-link').forEach(el => {
@@ -60,16 +64,62 @@ const initBrandInfo = () => {
 };
 
 // --- Property Grid & Rendering ---
-const renderProperties = (category = 'all') => {
+const renderProperties = (filters = 'all') => {
     const grid = document.getElementById('propertyGrid');
     if (!grid) return;
 
     grid.innerHTML = '';
     
-    // Filter properties based on category
-    const filtered = category === 'all' 
-        ? listings 
-        : listings.filter(p => p.category === category);
+    let filtered;
+    if (filters === 'all') {
+        filtered = listings;
+    } else if (typeof filters === 'string') {
+        filtered = listings.filter(p => p.category === filters);
+    } else {
+        // Advanced filters from search bar
+        filtered = listings.filter(p => {
+            const matchesType = !filters.type || p.type.toLowerCase() === filters.type.toLowerCase();
+            const matchesSector = !filters.sector || p.location.toLowerCase().includes(filters.sector.toLowerCase());
+            return matchesType && matchesSector;
+        });
+    }
+
+    if (filtered.length === 0) {
+        let sectorQuery = "";
+        let whatsappQuery = "Hi Highmark Associates, I'm looking for properties";
+        
+        if (typeof filters === 'object') {
+            if (filters.type) whatsappQuery += ` like a ${filters.type}`;
+            if (filters.sector) {
+                whatsappQuery += ` in ${filters.sector}`;
+                sectorQuery = filters.sector;
+            }
+        }
+        whatsappQuery += ". Can you help me find something?";
+
+        const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sectorQuery || 'Islamabad Real Estate')}`;
+        const waLink = `https://wa.me/923178090809?text=${encodeURIComponent(whatsappQuery)}`;
+
+        grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: var(--bg-card); border: 1px dashed rgba(184, 150, 62, 0.3); border-radius: var(--radius);">
+                <div style="font-size: 3rem; margin-bottom: 1.5rem;">🏘️</div>
+                <h3 style="margin-bottom: 1rem;">No Exact Matches Found</h3>
+                <p style="color: var(--text-dim); margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    We couldn't find an exact match on our website for this specific search. However, we have many more off-market properties available.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="${mapsLink}" target="_blank" class="btn-conv" style="background: transparent; border: 1px solid var(--gold); display: flex; align-items: center; gap: 0.5rem;">
+                        📍 View ${sectorQuery || 'Area'} on Map
+                    </a>
+                    <a href="${waLink}" target="_blank" class="btn-conv" style="background: var(--accent-green); border: none; display: flex; align-items: center; gap: 0.5rem;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.011 2c-5.505 0-9.989 4.484-9.989 9.989 0 1.758.459 3.41 1.259 4.85l-1.336 4.882 4.996-1.311c1.405.764 3.003 1.2 4.693 1.2 5.505 0 10.011-4.484 10.011-9.989 0-5.505-4.506-9.989-10.035-9.989zm5.304 14.125c-.225.63-1.3 1.233-1.787 1.309-.434.067-.98.125-2.825-.615-2.355-.945-3.87-3.325-3.987-3.484-.117-.16-1.025-1.349-1.025-2.583a2.64 2.64 0 01.815-1.956c.258-.258.558-.325.742-.325.183 0 .367.009.525.017.167.008.392-.067.617.475.225.542.775 1.884.842 2.017.067.133.111.291.017.475-.083.183-.133.291-.258.441-.125.15-.262.333-.375.45-.125.133-.25.275-.108.517.142.242.633 1.042 1.366 1.692.942.841 1.734 1.1 1.984 1.225.25.125.392.108.542-.058.15-.167.642-.75.815-1.008.167-.258.333-.217.558-.133.225.083 1.433.675 1.683.8.25.125.417.183.475.291.058.108.058.625-.167 1.258z"/></svg>
+                        Enquire on WhatsApp
+                    </a>
+                </div>
+            </div>
+        `;
+        return;
+    }
 
     filtered.forEach(p => {
         const card = document.createElement('article');
@@ -141,6 +191,101 @@ const getSpecIcon = (key) => {
 
 const initPropertyGrid = () => {
     renderProperties('all');
+};
+
+const initSearch = () => {
+    const searchBtn = document.getElementById('searchBtn');
+    if (!searchBtn) return;
+
+    searchBtn.addEventListener('click', () => {
+        const typeSelect = document.getElementById('stype');
+        const sectorSelect = document.getElementById('ssector');
+        
+        const type = typeSelect ? typeSelect.value : "";
+        const sectorRaw = sectorSelect ? sectorSelect.value : "";
+        
+        // Clean sector name for matching (e.g. "E-11 Islamabad" -> "E-11")
+        const sector = sectorRaw.split(' ')[0];
+
+        renderProperties({ type, sector });
+        
+        // Scroll to results
+        document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+    });
+};
+
+const initCustomSelects = () => {
+    const selects = document.querySelectorAll('select');
+    
+    selects.forEach(select => {
+        // Skip hidden selects or already wrapped ones
+        if (select.classList.contains('native-select-hidden')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-select-wrapper';
+        
+        // Inherit classes for styling (like contact-form-input)
+        if (select.classList.contains('contact-form-input')) {
+            wrapper.classList.add('contact-form-input');
+        }
+
+        const trigger = document.createElement('div');
+        trigger.className = 'custom-select-trigger';
+        trigger.textContent = select.options[select.selectedIndex]?.textContent || 'Select';
+
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'custom-options';
+
+        Array.from(select.options).forEach((option, index) => {
+            const customOption = document.createElement('div');
+            customOption.className = 'custom-option';
+            customOption.textContent = option.textContent;
+            if (index === select.selectedIndex) customOption.classList.add('selected');
+
+            customOption.addEventListener('click', (e) => {
+                e.stopPropagation();
+                select.selectedIndex = index;
+                select.dispatchEvent(new Event('change'));
+                trigger.textContent = option.textContent;
+                
+                optionsContainer.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
+                customOption.classList.add('selected');
+                
+                wrapper.classList.remove('open');
+            });
+
+            optionsContainer.appendChild(customOption);
+        });
+
+        // Toggle dropdown on wrapper click for larger target
+        wrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = wrapper.classList.contains('open');
+            document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+            if (!isOpen) wrapper.classList.add('open');
+        });
+
+        // Constructor
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.appendChild(select);
+        wrapper.appendChild(trigger);
+        wrapper.appendChild(optionsContainer);
+        
+        select.classList.add('native-select-hidden');
+
+        // Sync custom UI if native select is changed programmatically
+        select.addEventListener('change', () => {
+            trigger.textContent = select.options[select.selectedIndex]?.textContent || 'Select';
+            optionsContainer.querySelectorAll('.custom-option').forEach((opt, idx) => {
+                if (idx === select.selectedIndex) opt.classList.add('selected');
+                else opt.classList.remove('selected');
+            });
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+    });
 };
 
 const initPropertyModal = () => {

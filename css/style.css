@@ -43,6 +43,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   touch-action: manipulation;
+  color-scheme: dark; /* Force native UI like dropdowns to be dark */
 }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; transition: var(--transition); }
@@ -197,7 +198,102 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
 .search-field { flex: 1; display: flex; flex-direction: column; padding: 0.75rem 1.5rem; border-right: 1px solid rgba(255, 255, 255, 0.1); text-align: left; }
 .search-field:last-of-type { border-right: none; }
 .search-label { font-size: 0.65rem; font-weight: 700; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.search-field select { background: transparent; color: var(--white); border: none; font-family: inherit; font-size: 1rem; width: 100%; outline: none; cursor: pointer; }
+/* Global Dropdown Fallbacks (hidden when custom kicks in) */
+select {
+  background-color: var(--bg-card) !important;
+  color: var(--white) !important;
+  cursor: pointer;
+}
+select option {
+  background-color: var(--bg-card);
+  color: var(--white);
+}
+
+/* Custom Select Component UI */
+.custom-select-wrapper {
+  position: relative;
+  user-select: none;
+  width: 100%;
+}
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-white);
+  min-height: 1.5em; /* Ensure some height even if empty */
+}
+
+.custom-select-trigger::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(45deg);
+  margin-left: 1rem;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.custom-select-wrapper.open .custom-select-trigger::after {
+  transform: rotate(-135deg) translateY(-2px) translateX(-2px);
+}
+
+.custom-options {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: -1rem; /* Extend slightly to line up with labels */
+  right: -1rem;
+  background: #1A1C1E; /* Solid non-transparent background */
+  border: 1px solid rgba(184, 150, 62, 0.5);
+  border-radius: 4px;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.8);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.custom-select-wrapper.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.custom-option {
+  padding: 1rem 1.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.custom-option:last-child { border-bottom: none; }
+
+.custom-option:hover {
+  background: rgba(184, 150, 62, 0.2);
+  color: var(--gold-light);
+  padding-left: 1.75rem;
+}
+
+.custom-option.selected {
+  background: var(--gold);
+  color: var(--white);
+}
+
+.native-select-hidden {
+  display: none !important;
+}
+
+.search-field select { visibility: hidden; position: absolute; }
 .search-btn {
   background: var(--gold);
   color: var(--white);
