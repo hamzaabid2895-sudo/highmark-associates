@@ -537,6 +537,15 @@ footer { background: var(--bg-darker); padding: 8rem 0 4rem; border-top: 1px sol
   .search-bar { flex-direction: column; padding: 1rem; width: 95%; }
   .search-field { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 1rem 0; }
   .search-btn { padding: 1.2rem; margin-top: 0.5rem; }
+  
+  /* Mobile Dropdown Refinements */
+  .custom-options {
+    left: 0;
+    right: 0;
+    top: calc(100% + 5px);
+  }
+  .custom-select-trigger { padding: 0.5rem 0; }
+  
   .section { padding: 4rem 1.5rem; }
   .container { padding: 0 1.5rem; }
   .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
