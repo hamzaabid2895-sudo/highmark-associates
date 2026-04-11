@@ -156,6 +156,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Playfair Display', serif; line-hei
   justify-content: center;
   position: relative;
   text-align: center;
+  z-index: 20; /* Ensure hero content stays above sections below */
   /* overflow: hidden removed to allow dropdowns to be visible */
 }
 .hero-bg {
@@ -309,7 +310,11 @@ select option {
 .search-btn:hover { background: var(--gold-light); }
 
 /* ===== PROPERTY CARDS ===== */
-.listing-section { background: var(--bg-darker); }
+.listing-section { 
+  background: var(--bg-darker); 
+  position: relative;
+  z-index: 5;
+}
 .filter-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 4rem; flex-wrap: wrap; }
 .filter-tab {
   padding: 0.6rem 1.5rem;
