@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check which page we are on
     const path = window.location.pathname;
-    const isPostPage = path.includes('blog-post.html');
+    const isPostPage = path.includes('blog-post.html') || window.location.search.includes('id=');
+    const isBlogArchive = path.includes('blog.html') || (!isPostPage && path.endsWith('/blog'));
     
     if (isPostPage) {
         renderBlogPost();
