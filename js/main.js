@@ -25,18 +25,33 @@ const renderBlogs = () => {
     const grid = document.getElementById('blogsGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    blogs.forEach(b => {
+    
+    // Show only the latest 3 blogs on the home page
+    const latestBlogs = blogs.slice(0, 3);
+    
+    latestBlogs.forEach(b => {
         grid.innerHTML += `
             <article class="blog-card">
-                <img src="${b.image}" alt="${b.title}" class="blog-img" loading="lazy" />
-                <div class="blog-content">
+                <img src="${b.image}" alt="${b.title}" class="blog-card-img" loading="lazy" />
+                <div class="blog-card-body">
                     <span class="blog-date">${b.date}</span>
                     <h3 class="blog-title">${b.title}</h3>
-                    <p class="blog-desc">${b.content}</p>
+                    <p class="blog-excerpt">${b.excerpt || 'Discover the latest trends and investment opportunities in Islamabad.'}</p>
+                    <a href="blog-post.html?id=${b.id}" class="blog-read-more">Read Article <span>→</span></a>
                 </div>
             </article>
         `;
     });
+    
+    // Add "View All" button if there are many blogs
+    if (blogs.length > 0) {
+        const wrapper = document.createElement('div');
+        wrapper.style.gridColumn = '1 / -1';
+        wrapper.style.textAlign = 'center';
+        wrapper.style.padding = '2rem 0';
+        wrapper.innerHTML = `<a href="blog.html" class="nav-cta" style="display:inline-block">View All Insights</a>`;
+        grid.appendChild(wrapper);
+    }
 };
 
 // --- Brand & Contact Info ---

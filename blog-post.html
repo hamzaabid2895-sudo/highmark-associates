@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Article | Highmark Associates</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+<!-- ===== MOBILE NAV ===== -->
+<nav class="mobile-nav" id="mobileNav">
+    <span class="mobile-close">✕</span>
+    <a href="index.html#hero">Home</a>
+    <a href="index.html#listings">Property Listings</a>
+    <a href="blog.html">Blog & Insights</a>
+    <a href="index.html#contact">Contact</a>
+</nav>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+    <nav class="navbar" id="navbar">
+        <div class="container flex-between">
+            <a href="index.html" class="line-logo" aria-label="Highmark Associates Home">
+                <img src="./assets/logo.png" alt="Highmark Associates Logo" style="height: 60px; width: auto;" />
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="index.html#listings">Listings</a></li>
+                <li><a href="blog.html" style="color: var(--gold);">Blog</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <a href="https://wa.me/923178090809" target="_blank" class="nav-cta conf-whatsapp-link" style="display: flex; align-items: center; gap: 0.8rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.011 2c-5.505 0-9.989 4.484-9.989 9.989 0 1.758.459 3.41 1.259 4.85l-1.336 4.882 4.996-1.311c1.405.764 3.003 1.2 4.693 1.2 5.505 0 10.011-4.484 10.011-9.989 0-5.505-4.506-9.989-10.035-9.989zm5.304 14.125c-.225.63-1.3 1.233-1.787 1.309-.434.067-.98.125-2.825-.615-2.355-.945-3.87-3.325-3.987-3.484-.117-.16-1.025-1.349-1.025-2.583a2.64 2.64 0 01.815-1.956c.258-.258.558-.325.742-.325.183 0 .367.009.525.017.167.008.392-.067.617.475.225.542.775 1.884.842 2.017.067.133.111.291.017.475-.083.183-.133.291-.258.441-.125.15-.262.333-.375.45-.125.133-.25.275-.108.517.142.242.633 1.042 1.366 1.692.942.841 1.734 1.1 1.984 1.225.25.125.392.108.542-.058.15-.167.642-.75.815-1.008.167-.258.333-.217.558-.133.225.083 1.433.675 1.683.8.25.125.417.183.475.291.058.108.058.625-.167 1.258z"/></svg>
+                WhatsApp Consultation
+            </a>
+            <button class="nav-hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<article class="section" style="padding-top: 0;">
+    <div class="container" id="articleContainer">
+        <!-- Content injected by JS -->
+    </div>
+</article>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-links">
+                <a href="index.html" class="logo">
+                    <span class="logo-main">HIGHMARK</span>
+                    <span class="logo-sub">ASSOCIATES</span>
+                </a>
+                <p class="footer-about">Islamabad's most trusted real estate agency specializing in CDA-approved properties with over 15 years of excellence.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html#hero">Home</a></li>
+                    <li><a href="index.html#listings">Properties</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Sectors</h4>
+                <ul>
+                    <li><a>E-11 Islamabad</a></li>
+                    <li><a>D-12 Islamabad</a></li>
+                    <li><a>DHA Phase 2</a></li>
+                    <li><a>F-10 / F-11</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                 <h4>Contact</h4>
+                 <div class="contact-item">
+                     <span class="contact-icon">📍</span>
+                     <span class="conf-address">E-11/2 Markaz, Islamabad</span>
+                 </div>
+                 <div class="contact-item">
+                     <span class="contact-icon">📞</span>
+                     <span class="conf-phone">+92-317-8090809</span>
+                 </div>
+            </div>
+        </div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 3rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            © 2026 Highmark Associates. All rights reserved. | Premium Real Estate Islamabad
+        </div>
+    </div>
+</footer>
+
+<script type="module" src="./js/blog-renderer.js"></script>
+
+</body>
+</html>
