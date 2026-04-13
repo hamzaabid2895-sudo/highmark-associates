@@ -3,7 +3,7 @@ export const blogs = [
         id: "1",
         title: "Top 5 Investment Areas in Islamabad for 2026 | Best Property Picks",
         date: "April 13, 2026",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200",
+        image: "./assets/new bluearea.jpg",
         excerpt: "The real estate market in Islamabad is evolving fast. Discover the top 5 areas that stand out due to strong development, better connectivity, and rising demand.",
         content: `
             <p>The real estate market in Islamabad is evolving fast. Investors are now looking beyond traditional sectors. They want high returns, secure investments, and future growth. As we move into 2026, several areas stand out due to strong development, better connectivity, and rising demand.</p>
@@ -12,7 +12,7 @@ export const blogs = [
             <hr class="blog-divider" />
             
             <h2>1. Capital Smart City (CSC)</h2>
-            <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=1200" alt="Capital Smart City Modern Infrastructure" class="blog-inline-img" />
+            <img src="./assets/CSC (1).webp" alt="Capital Smart City Modern Infrastructure" class="blog-inline-img" />
             
             <p>Capital Smart City continues to attract investors. It is Pakistan’s first smart city project. Moreover, it offers modern infrastructure and smart living features.</p>
             <p>First of all, the buzz around Capital Smart City Phase 3 balloting is strong. Investors are waiting for new opportunities. At the same time, the CSC smart villas payment plan makes it easier for buyers to enter the market.</p>
@@ -28,7 +28,7 @@ export const blogs = [
             <hr class="blog-divider" />
 
             <h2>2. DHA Phase 9 (Gandhara City)</h2>
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200" alt="DHA Phase 9 Gandhara City Luxury Homes" class="blog-inline-img" />
+            <img src="./assets/dha phase (1).jpg" alt="DHA Phase 9 Gandhara City Luxury Homes" class="blog-inline-img" />
             
             <p>DHA remains a trusted name in real estate. DHA Phase 9, also known as Gandhara City, is gaining attention. It offers security, prestige, and institutional backing.</p>
             <p>The availability of DHA Phase 9 Gandhara City maps helps investors understand the layout. This transparency builds trust.</p>
@@ -45,7 +45,7 @@ export const blogs = [
             <hr class="blog-divider" />
 
             <h2>3. Faisal Town Phase 2 (Sector-O & X)</h2>
-            <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1200" alt="Faisal Town Phase 2 Development" class="blog-inline-img" />
+            <img src="./assets/faysal town.jpg" alt="Faisal Town Phase 2 Development" class="blog-inline-img" />
             
             <p>Faisal Town Phase 2 is one of the fastest-growing projects. It is known for high liquidity and rapid construction.</p>
             <p>Currently, investors are actively checking the Faisal Town Phase 2 Sector-O price list. Prices are still reasonable compared to other projects.</p>
@@ -63,7 +63,7 @@ export const blogs = [
             <hr class="blog-divider" />
 
             <h2>4. Multi Gardens B-17 (Margalla Avenue Extension)</h2>
-            <img src="https://images.unsplash.com/photo-1506526615599-27083fb80a6b?q=80&w=1200" alt="Multi Gardens B-17 Margalla Hills View" class="blog-inline-img" />
+            <img src="./assets/multigaren B17.jpg" alt="Multi Gardens B-17 Margalla Hills View" class="blog-inline-img" />
             
             <p>Multi Gardens B-17 is already a developed area. Therefore, it attracts investors looking for stable returns.</p>
             <p>The demand for Multi Gardens B-17 plot prices in 2026 is increasing steadily. Prices may rise further due to improved access.</p>
@@ -80,7 +80,7 @@ export const blogs = [
             <hr class="blog-divider" />
 
             <h2>5. Vertical Projects: Blue Area & Gulberg Greens</h2>
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" alt="Blue Area High Rise Architecture" class="blog-inline-img" />
+            <img src="./assets/gulberg greens.webp" alt="Gulberg Greens Islamabad Architecture" class="blog-inline-img" />
             
             <p>Vertical development is the future of Islamabad. Areas like Blue Area and Gulberg Greens are leading this trend.</p>
             <p>Today, investors are exploring Islamabad luxury apartments for sale in 2026. These units offer modern living and high rental income.</p>
