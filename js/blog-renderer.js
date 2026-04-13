@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         renderBlogList();
     }
+    initAnimations();
 });
 
 // --- Brand & Contact Info ---
@@ -126,4 +127,17 @@ const renderBlogPost = () => {
             <a href="blog.html" class="nav-cta" style="display: inline-block;">← Back to All Articles</a>
         </div>
     `;
+};
+
+// --- Animations ---
+const initAnimations = () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 };
