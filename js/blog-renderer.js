@@ -1,7 +1,8 @@
-import { blogs } from './blogs.js';
+import { blogs as defaultBlogs } from './blogs.js';
 import { config as defaultConfig } from './config.js';
 
 let config = JSON.parse(localStorage.getItem('hm_config')) || defaultConfig;
+let blogs = JSON.parse(localStorage.getItem('hm_blogs')) || defaultBlogs;
 
 document.addEventListener('DOMContentLoaded', () => {
     initBrandInfo();
